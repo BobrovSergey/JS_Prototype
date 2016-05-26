@@ -1,6 +1,10 @@
 (function(){
 	"use strict";
-	var c = document.getElementById("myCanvas");
+	var c = document.getElementById("myCanvas"),
+		rectangleEl = document.getElementById('rectangle'),
+		triangleEl = document.getElementById('triangle'),
+		rectangleLiEl = document.getElementById('rectangle_li'),
+		triangleLiEl = document.getElementById('triangle_li');
 	/*
 	* Figure constructor
 	*/
@@ -106,11 +110,24 @@
 	};
 
 
-	document.getElementById('rectangle_li').onclick = function(){
-		if(document.getElementById('rectangle').checked) {
+	/**
+	 * TODO
+	 * edit this
+	 */
+	rectangleLiEl.onclick = function(){
+		if(rectangleEl.checked) {
 			document.getElementById('rectangle_dimensions').style.display = 'block';
+			document.getElementById('triangle_dimensions').style.display = 'none';
 		}else {
 		  document.getElementById('rectangle_dimensions').style.display = 'none';
+		}
+	};
+	triangleLiEl.onclick = function(){
+		if(triangleEl.checked) {
+			document.getElementById('triangle_dimensions').style.display = 'block';
+			document.getElementById('rectangle_dimensions').style.display = 'none';
+		}else {
+			document.getElementById('triangle_dimensions').style.display = 'none';
 		}
 	};
 
@@ -121,6 +138,7 @@
 		if(selected !== null) {
 			var selectedValue = selected.value;
 			var ctx = c.getContext("2d");
+			ctx.beginPath();
 			ctx.clearRect(0, 0, c.width, c.height);
 
 			if(selectedValue === 'Rectangle') {
@@ -132,7 +150,10 @@
 				
 				
 			} else if(selectedValue === 'Triangle') {
-				var triangle = new Triangle(50, 100);
+
+				var triangleWidthEl = document.getElementById('triangle_width');
+				var triangleHeightEl = document.getElementById('triangle_height');
+				var triangle = new Triangle(+triangleWidthEl.value, +triangleHeightEl.value);
 				triangle.getArea().render();
 				console.log(triangle)
 			} else {
