@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div>
+	<h2>Choose figure</h2>
+	<ul style="list-style-type: none;">
+		<li id="rectangle_li">
+			<div>
+				<input id="rectangle" value="Rectangle" type="radio" name="type">
+				<label for="rectangle">Rectangle</label>
+			</div>
+			<div style="display: none;" id="rectangle_dimensions">
+				<div>
+					<input id="rectangle_width" type="number" required='required' name="rectangle_width">
+					<label for="rectangle_width">Rectangle width</label>	
+				</div>
+				
+				<div>
+					<input id="rectangle_height" type="number" required='required' name="rectangle_height">
+					<label for="rectangle_height">Rectangle height</label>	
+				</div>
+				
+			</div>
+			
+		</li>
+		<li>
+			<div>
+				<input id="triangle" value="Triangle" type="radio" name="type">
+				<label for="triangle">Triangle</label>
+			</div>
+			<div id="triangle_dimensions">
+				
+			</div>
+		</li>
+		<li>
+			<div>
+				<input id="circle" value="Circle" type="radio" name="type">
+				<label for="circle">Circle</label>
+			</div>
+			<div id="circle_dimensions">
+				
+			</div>
+		</li>
+	</ul>
+	<button name="ok" id="ok">OK!</button>
+</div>
+
+
+<canvas id="myCanvas"></canvas>
+<div id="area"></div>
+<script src="main.js"></script>
+</body>
+</html>
