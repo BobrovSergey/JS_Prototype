@@ -1,23 +1,45 @@
 (function(){
 	"use strict";
 	var c = document.getElementById("myCanvas"),
+		ctx = c.getContext("2d"),
+		okEl = document.getElementById("ok"),
+		areaDiv = document.getElementById("area"),
+
 		rectangleEl = document.getElementById('rectangle'),
-		triangleEl = document.getElementById('triangle'),
 		rectangleLiEl = document.getElementById('rectangle_li'),
-		triangleLiEl = document.getElementById('triangle_li');
+		rectangleDimensionsEl = document.getElementById('rectangle_dimensions'),
+		rectangleWidthEl = document.getElementById('rectangle_width'),
+		rectangleHeightEl = document.getElementById('rectangle_height'),
+
+		triangleEl = document.getElementById('triangle'),
+		triangleLiEl = document.getElementById('triangle_li'),
+		triangleDimensionsEl = document.getElementById('triangle_dimensions'),
+		triangleWidthEl = document.getElementById('triangle_width'),
+		triangleHeightEl = document.getElementById('triangle_height'),
+
+		circleEl = document.getElementById('circle'),
+		circleLiEl = document.getElementById('circle_li'),
+		circleDimensionsEl = document.getElementById('circle_dimensions'),
+		circleRadiusEl = document.getElementById('circle_radius');
+
 	/*
 	* Figure constructor
 	*/
 	function Figure() {
 		
+		
 	}
 
 	Figure.prototype.getArea = function(width, height) {
-	  console.log("getting area...");
+		console.log("getting area...");
+	};
+
+	Figure.prototype.cleanCanvas = function() {
+		ctx.beginPath();
+		ctx.clearRect(0, 0, c.width, c.height);
 	};
 
 	Figure.prototype.outputArea = function() {
-  		var areaDiv = document.getElementById("area");
 		areaDiv.innerHTML = "Area is " + this.getArea();
 	};
 
@@ -55,8 +77,10 @@
 
 
 	Rectangle.prototype.render = function(){
-		var ctx = c.getContext("2d");
+		this.cleanCanvas();
+
 		ctx.rect(0, 0, this.getWidth(), this.getHeight());
+		ctx.fill();
 		ctx.stroke();
 
 		this.outputArea();
@@ -91,13 +115,13 @@
 	* Override Figure getArea()
 	*/
 	Triangle.prototype.getArea = function(){
-		this.area = this.getWidth() * this.getHeight() / 2;
-	 	return this;
+		return this.getWidth() * this.getHeight() / 2;
+	 	
 	};
 
 	Triangle.prototype.render = function(){
-		
-		var ctx = c.getContext("2d");
+		this.cleanCanvas();
+
 		var x = c.width / 2;
 		var y = c.height / 2 - this.getWidth() / 2;
 		ctx.beginPath();
@@ -106,59 +130,100 @@
 		ctx.lineTo(x - this.getWidth() / 2, y + this.getHeight());
 		ctx.closePath();
 		ctx.fill();
+
+		this.outputArea();
 	    return this;
 	};
 
 
-	/**
-	 * TODO
-	 * edit this
-	 */
+
+	/*
+	* Circle constructor
+	*/
+	function Circle(radius) {
+		var circleRadius = radius;
+
+		this.getRadius = function(){
+			return circleRadius;
+		};
+		this.setRadius = function(value){
+			circleRadius = value;
+		};
+	}
+
+	Circle.prototype = Object.create(Figure.prototype);
+
+	/*
+	* Override Figure getArea()
+	*/
+	Circle.prototype.getArea = function(){
+		return 3.14 *  Math.pow(this.getRadius(), 2);
+	};
+
+	Circle.prototype.render = function(){
+		this.cleanCanvas();
+
+		ctx.beginPath();
+		ctx.arc(100,75,this.getRadius(),0,2*Math.PI);
+		ctx.fill();
+		ctx.stroke();
+
+		this.outputArea();
+	    return this;
+	};
+
+
+
+
 	rectangleLiEl.onclick = function(){
 		if(rectangleEl.checked) {
-			document.getElementById('rectangle_dimensions').style.display = 'block';
-			document.getElementById('triangle_dimensions').style.display = 'none';
-		}else {
-		  document.getElementById('rectangle_dimensions').style.display = 'none';
+			rectangleDimensionsEl.style.display = 'block';
+			triangleDimensionsEl.style.display = 'none';
+			circleDimensionsEl.style.display = 'none';
 		}
 	};
 	triangleLiEl.onclick = function(){
 		if(triangleEl.checked) {
-			document.getElementById('triangle_dimensions').style.display = 'block';
-			document.getElementById('rectangle_dimensions').style.display = 'none';
-		}else {
-			document.getElementById('triangle_dimensions').style.display = 'none';
+			triangleDimensionsEl.style.display = 'block';
+			rectangleDimensionsEl.style.display = 'none';
+			circleDimensionsEl.style.display = 'none';
+		}
+	};
+	circleLiEl.onclick = function(){
+		if(circleEl.checked) {
+			circleDimensionsEl.style.display = 'block';
+			rectangleDimensionsEl.style.display = 'none';
+			triangleDimensionsEl.style.display = 'none';
 		}
 	};
 
 
-	document.getElementById("ok").onclick = function(e){
+	okEl.onclick = function(e){
 		e.preventDefault();
 		var selected = document.querySelector('input[name="type"]:checked');
 		if(selected !== null) {
 			var selectedValue = selected.value;
-			var ctx = c.getContext("2d");
-			ctx.beginPath();
-			ctx.clearRect(0, 0, c.width, c.height);
 
 			if(selectedValue === 'Rectangle') {
-				var rectangleWidthEl = document.getElementById('rectangle_width');
-				var rectangleHeightEl = document.getElementById('rectangle_height');
-
-				var rectangle = new Rectangle(rectangleWidthEl.value, rectangleHeightEl.value);
-				rectangle.render();
-				
-				
+				if(rectangleWidthEl.value && rectangleHeightEl.value){
+					var figure = new Rectangle(rectangleWidthEl.value, rectangleHeightEl.value);
+				}
 			} else if(selectedValue === 'Triangle') {
-
-				var triangleWidthEl = document.getElementById('triangle_width');
-				var triangleHeightEl = document.getElementById('triangle_height');
-				var triangle = new Triangle(+triangleWidthEl.value, +triangleHeightEl.value);
-				triangle.getArea().render();
-				console.log(triangle)
+				if(+triangleWidthEl.value && +triangleHeightEl.value) {
+					var figure = new Triangle(+triangleWidthEl.value, +triangleHeightEl.value);
+				}
 			} else {
-
+				if(circleRadiusEl.value){
+					var figure = new Circle(circleRadiusEl.value);
+				}
 			}
+			if(figure !== undefined) {
+				figure.render();
+			} else {
+				alert("Insert values!");
+			}
+		} else {
+			alert("Select a figure!");
 		}
 	}
 	

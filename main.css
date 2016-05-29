@@ -1,3 +1,31 @@
 body {
-
+	background-color: #cfcfcf;
+	font-size: 18px;
+}
+.container {
+	width: 20%;
+}
+.result {
+	margin: 10px;
+}
+.result canvas {
+	border: 1px solid black;
+}
+.dimensions {
+	display: none;
+	margin: 10px;
+}
+.figure-li {
+	margin: 10px 0;
+}
+.figure-li input {
+	float: right
+}
+.ok {
+	width: 100px;
+	height: 50px;
+	margin: 10px;
+}
+.figure-list {
+	list-style-type: none;
 }

@@ -5,60 +5,67 @@
 	<link rel="stylesheet" href="main.css">
 </head>
 <body>
-<div>
+<div class="container">
 	<h2>Choose figure</h2>
-	<ul style="list-style-type: none;">
-		<li id="rectangle_li">
+	<ul class="figure-list">
+		<li class="figure-li" id="rectangle_li">
 			<div>
-				<input id="rectangle" value="Rectangle" type="radio" name="type">
 				<label for="rectangle">Rectangle</label>
+				<input id="rectangle" value="Rectangle" type="radio" name="type">
 			</div>
-			<div style="display: none;" id="rectangle_dimensions">
+			<div class="dimensions" id="rectangle_dimensions">
 				<div>
-					<input id="rectangle_width" type="number" required='required' name="rectangle_width">
 					<label for="rectangle_width">Rectangle width</label>	
+					<input id="rectangle_width" type="number" required='required' name="rectangle_width">
 				</div>
 				
 				<div>
-					<input id="rectangle_height" type="number" required='required' name="rectangle_height">
 					<label for="rectangle_height">Rectangle height</label>	
+					<input id="rectangle_height" type="number" required='required' name="rectangle_height">
 				</div>
 			</div>
 			
 		</li>
-		<li id="triangle_li">
+		<li class="figure-li" id="triangle_li">
 			<div>
-				<input id="triangle" value="Triangle" type="radio" name="type">
 				<label for="triangle">Triangle</label>
+				<input id="triangle" value="Triangle" type="radio" name="type">
 			</div>
-			<div style="display: none;" id="triangle_dimensions">
+			<div class="dimensions" id="triangle_dimensions">
 				<div>
-					<input id="triangle_width" type="number" required='required' name="triangle_width">
 					<label for="triangle_width">Triangle width</label>
+					<input id="triangle_width" type="number" required='required' name="triangle_width">
 				</div>
 
 				<div>
-					<input id="triangle_height" type="number" required='required' name="triangle_height">
 					<label for="triangle_height">Triangle height</label>
+					<input id="triangle_height" type="number" required='required' name="triangle_height">
 				</div>
 			</div>
 		</li>
-		<li>
+		<li class="figure-li" id="circle_li">
 			<div>
-				<input id="circle" value="Circle" type="radio" name="type">
 				<label for="circle">Circle</label>
+				<input id="circle" value="Circle" type="radio" name="type">
 			</div>
-			<div id="circle_dimensions">
-				
+			<div class="dimensions" id="circle_dimensions">
+				<div>
+					<label for="circle_radius">Circle radius</label>
+					<input id="circle_radius" type="number" required='required' name="circle_radius">
+				</div>
 			</div>
 		</li>
 	</ul>
-	<button name="ok" id="ok">OK!</button>
+	
 </div>
 
+<button class="ok" name="ok" id="ok">Render</button>
 
-<canvas id="myCanvas"></canvas>
-<div id="area"></div>
+<div class="result">
+	<canvas id="myCanvas"></canvas>
+	<div id="area"></div>
+</div>
+
 <script src="main.js"></script>
 </body>
 </html>
